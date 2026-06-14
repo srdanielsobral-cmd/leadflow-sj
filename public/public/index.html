@@ -1,0 +1,4611 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LeadFlow Sistema</title>
+<script>
+if(location.protocol === "file:"){
+    window.location.href = "http://localhost:3000/sistema";
+}
+</script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial;
+}
+
+body{
+    display:flex;
+    background:#eef8f7;
+    min-height:100vh;
+}
+
+.sidebar{
+    width:260px;
+    min-height:100vh;
+    background:#073763;
+    color:white;
+    padding:25px;
+    display:flex;
+    flex-direction:column;
+}
+
+.brand-title{
+    border-bottom:1px solid #334155;
+    padding-bottom:22px;
+    margin-bottom:22px;
+}
+
+.brand-title span{
+    display:block;
+    color:#bff5ca;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+.brand-title h2{
+    font-size:24px;
+    line-height:28px;
+    color:white;
+}
+
+.brand-logo{
+    display:grid;
+    gap:10px;
+    color:white;
+    text-align:center;
+}
+
+.brand-logo img{
+    width:118px;
+    max-width:100%;
+    height:auto;
+    margin:0 auto;
+    border-radius:0;
+    background:transparent;
+    filter:drop-shadow(0 16px 24px rgba(0,0,0,.28));
+}
+
+.brand-logo strong{
+    color:white;
+    font-size:27px;
+    line-height:30px;
+    font-weight:bold;
+}
+
+.brand-logo small{
+    display:block;
+    color:#cbd5e1;
+    font-size:12px;
+    line-height:16px;
+    font-weight:normal;
+    margin-top:4px;
+}
+
+.sidebar-menu{
+    flex:1;
+}
+
+.sidebar-footer{
+    border-top:1px solid #334155;
+    padding-top:18px;
+    color:#cbd5e1;
+}
+
+.sidebar-footer h3{
+    color:white;
+    font-size:16px;
+    margin-bottom:8px;
+}
+
+.sidebar-footer p{
+    font-size:14px;
+    line-height:20px;
+}
+
+.menu-item{
+    width:100%;
+    border:none;
+    background:transparent;
+    color:#cbd5e1;
+    text-align:left;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:8px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:bold;
+}
+
+.menu-item:hover{
+    background:#1f2937;
+    color:white;
+}
+
+.menu-item.active-menu{
+    background:#0a70b7;
+    color:white;
+}
+
+.content{
+    flex:1;
+    padding:30px;
+}
+
+.page-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:#0f172a;
+    font-size:28px;
+    margin-bottom:20px;
+}
+
+.page-title::before{
+    content:"";
+    width:8px;
+    height:32px;
+    border-radius:8px;
+    background:#2daa36;
+    display:block;
+}
+
+.tab{
+    display:none;
+}
+
+.tab.active{
+    display:block;
+}
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+    margin-bottom:25px;
+}
+
+.home-greeting{
+    background:linear-gradient(135deg, #073763, #0a70b7 58%, #2daa36);
+    color:white;
+    border-radius:8px;
+    padding:24px;
+    margin-bottom:22px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+}
+
+.home-greeting span{
+    display:block;
+    color:#c8f7d1;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.home-greeting h1{
+    font-size:28px;
+    line-height:34px;
+    margin:0;
+}
+
+.home-greeting p{
+    color:#cbd5e1;
+    font-size:14px;
+    line-height:20px;
+    margin-top:6px;
+}
+
+.home-greeting-time{
+    color:#cbd5e1;
+    font-size:14px;
+    white-space:nowrap;
+}
+
+.metric-card{
+    background:white;
+    border-radius:15px;
+    padding:25px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+}
+
+.metric-card h3{
+    color:#64748b;
+    margin-bottom:10px;
+    font-size:15px;
+}
+
+.metric-card h1{
+    color:#0f172a;
+    font-size:35px;
+}
+
+.metric-icon{
+    width:54px;
+    height:54px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:27px;
+    background:#eff6ff;
+}
+
+.metric-card.open .metric-icon{
+    background:#fffbeb;
+}
+
+.metric-card.done{
+    border-left:5px solid #10b981;
+}
+
+.metric-card.done .metric-icon{
+    background:#dcfce7;
+}
+
+.metric-card.done h1{
+    color:#059669;
+}
+
+.card{
+    background:white;
+    border-radius:15px;
+    padding:25px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-section{
+    border:1px solid #e2e8f0;
+    border-radius:10px;
+    padding:18px;
+    margin-bottom:18px;
+}
+
+.form-section h2{
+    color:#0f172a;
+    font-size:18px;
+    margin-bottom:14px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:16px;
+}
+
+.form-grid .full{
+    grid-column:1 / -1;
+}
+
+input, select{
+    width:100%;
+    padding:12px;
+    margin-top:8px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+textarea{
+    width:100%;
+    min-height:90px;
+    padding:12px;
+    margin-top:8px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    resize:vertical;
+    font-family:Arial;
+}
+
+.lead-details{
+    color:#475569;
+    font-size:13px;
+    line-height:22px;
+}
+
+.lead-details strong{
+    color:#0f172a;
+}
+
+@media (max-width:900px){
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .dashboard-grid,
+    .home-info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .activity-item{
+        grid-template-columns:44px minmax(0, 1fr);
+    }
+
+    .activity-date{
+        grid-column:2;
+        text-align:left;
+    }
+}
+
+.search-bar{
+    margin-bottom:15px;
+}
+
+.search-bar input{
+    margin-top:0;
+}
+
+.primary{
+    border:none;
+    background:#0a70b7;
+    color:white;
+    padding:14px 25px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+.danger{
+    border:none;
+    background:#dc2626;
+    color:white;
+    padding:10px 14px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.danger:hover{
+    background:#b91c1c;
+}
+
+.whatsapp-button{
+    border:none;
+    background:#16a34a;
+    color:white;
+    padding:10px 14px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.whatsapp-button:hover{
+    background:#15803d;
+}
+
+.action-buttons{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.presence-actions{
+    display:inline-flex;
+    gap:6px;
+    padding:4px;
+    border:1px solid #dbeafe;
+    border-radius:8px;
+    background:#f8fafc;
+}
+
+.presence-button{
+    border:1px solid transparent;
+    background:white;
+    color:#334155;
+    padding:8px 10px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.presence-button.confirmou.active{
+    background:#dcfce7;
+    border-color:#86efac;
+    color:#166534;
+}
+
+.presence-button.nao-vai.active{
+    background:#fee2e2;
+    border-color:#fecaca;
+    color:#991b1b;
+}
+
+.presence-badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:78px;
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.presence-confirmou{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.presence-nao-vai{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.presence-pendente{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.remarketing-note{
+    color:#64748b;
+    font-size:14px;
+    margin-top:6px;
+}
+
+.consultor-report-button{
+    border:none;
+    background:transparent;
+    color:#0a70b7;
+    cursor:pointer;
+    font:inherit;
+    font-weight:bold;
+    padding:0;
+}
+
+.consultor-report-button:hover{
+    text-decoration:underline;
+}
+
+.editor-help{
+    margin-top:20px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:16px;
+    border:1px solid #dbeafe;
+    border-radius:8px;
+    background:linear-gradient(135deg, #f0f9ff, #f0fdf4);
+}
+
+.editor-help-icon{
+    width:42px;
+    height:42px;
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#0a70b7;
+    color:white;
+    flex-shrink:0;
+}
+
+.editor-help-icon svg{
+    width:22px;
+    height:22px;
+    stroke:currentColor;
+    stroke-width:2;
+    fill:none;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
+.editor-help h2{
+    color:#0f172a;
+    font-size:18px;
+    margin-bottom:4px;
+}
+
+.editor-help p{
+    color:#475569;
+    font-size:14px;
+    line-height:20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th, td{
+    text-align:left;
+    padding:15px;
+    border-bottom:1px solid #eee;
+}
+
+.status{
+    color:white;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+.aberto{
+    background:#f59e0b;
+}
+
+.atendido{
+    background:#10b981;
+}
+
+.weekly-card{
+    margin-top:25px;
+}
+
+.weekly-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+    margin-bottom:20px;
+}
+
+.weekly-header h2{
+    color:#0f172a;
+    font-size:22px;
+    margin-bottom:6px;
+}
+
+.weekly-header p{
+    color:#64748b;
+    font-size:14px;
+}
+
+.weekly-total{
+    color:#0f172a;
+    font-size:32px;
+    font-weight:bold;
+    text-align:right;
+}
+
+.weekly-total span{
+    display:block;
+    color:#64748b;
+    font-size:13px;
+    font-weight:normal;
+}
+
+.weekly-chart{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:14px;
+    min-height:220px;
+    align-items:end;
+}
+
+.chart-day{
+    height:220px;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    align-items:center;
+    gap:8px;
+}
+
+.chart-value{
+    color:#0f172a;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.chart-bar{
+    width:100%;
+    min-height:8px;
+    border-radius:8px 8px 0 0;
+    background:#0a70b7;
+}
+
+.chart-label{
+    color:#64748b;
+    font-size:13px;
+}
+
+.home-info-grid{
+    display:grid;
+    grid-template-columns:minmax(0, .9fr) minmax(0, 1.1fr);
+    gap:20px;
+    margin-top:25px;
+}
+
+.home-panel h2{
+    color:#0f172a;
+    font-size:21px;
+    margin-bottom:16px;
+}
+
+.summary-list{
+    display:grid;
+    gap:12px;
+}
+
+.summary-item{
+    display:flex;
+    justify-content:space-between;
+    gap:16px;
+    padding:12px 0;
+    border-bottom:1px solid #e2e8f0;
+    color:#475569;
+}
+
+.summary-item:last-child{
+    border-bottom:none;
+}
+
+.summary-item strong{
+    color:#0f172a;
+}
+
+.activity-list{
+    display:grid;
+    gap:12px;
+}
+
+.activity-item{
+    display:grid;
+    grid-template-columns:44px minmax(0, 1fr) auto;
+    gap:12px;
+    align-items:center;
+    padding:12px;
+    border:1px solid #e2e8f0;
+    border-radius:10px;
+}
+
+.activity-icon{
+    width:44px;
+    height:44px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#eff6ff;
+    font-size:22px;
+}
+
+.activity-title{
+    color:#0f172a;
+    font-weight:bold;
+    margin-bottom:4px;
+}
+
+.activity-meta{
+    color:#64748b;
+    font-size:13px;
+    line-height:18px;
+}
+
+.activity-date{
+    color:#64748b;
+    font-size:12px;
+    text-align:right;
+    white-space:nowrap;
+}
+
+.empty-state{
+    color:#64748b;
+    padding:18px;
+    border:1px dashed #cbd5e1;
+    border-radius:10px;
+    text-align:center;
+}
+
+.message-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,.45);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:1000;
+}
+
+.message-overlay.active{
+    display:flex;
+}
+
+.message-box{
+    width:min(420px, 100%);
+    background:white;
+    border-radius:12px;
+    padding:28px;
+    box-shadow:0 20px 40px rgba(15,23,42,.25);
+    text-align:center;
+}
+
+.message-box h2{
+    color:#0f172a;
+    font-size:22px;
+    margin-bottom:10px;
+}
+
+.message-box p{
+    color:#475569;
+    line-height:22px;
+    margin-bottom:20px;
+}
+
+.modal-box{
+    width:min(920px, 100%);
+    max-height:90vh;
+    overflow:auto;
+    background:white;
+    border-radius:12px;
+    padding:24px;
+    box-shadow:0 20px 40px rgba(15,23,42,.25);
+}
+
+.modal-header{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:18px;
+}
+
+.modal-header h2{
+    color:#0f172a;
+    font-size:22px;
+    margin-bottom:4px;
+}
+
+.modal-header p{
+    color:#64748b;
+    font-size:14px;
+    line-height:20px;
+}
+
+.modal-close{
+    border:none;
+    background:#f1f5f9;
+    color:#0f172a;
+    width:38px;
+    height:38px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:22px;
+    line-height:38px;
+}
+
+.modal-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:18px;
+}
+
+.secondary{
+    border:1px solid #cbd5e1;
+    background:white;
+    color:#0f172a;
+    padding:14px 22px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+/* Ajustes visuais do menu e dos formulários */
+body{
+    background:#eef8f7;
+    color:#0f172a;
+}
+
+.sidebar{
+    width:252px;
+    min-height:100vh;
+    position:sticky;
+    top:0;
+    align-self:flex-start;
+    background:#052946;
+    padding:18px;
+    border-right:1px solid rgba(148,163,184,.18);
+}
+
+.brand-title{
+    padding:10px 6px 20px;
+    margin-bottom:12px;
+    border-bottom:none;
+    text-align:center;
+}
+
+.brand-title span{
+    color:#8be49b;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    margin-bottom:12px;
+}
+
+.brand-title h2{
+    font-size:30px;
+    line-height:32px;
+}
+
+.sidebar-menu{
+    display:grid;
+    align-content:start;
+    gap:7px;
+}
+
+.menu-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:#aab4c3;
+    padding:13px 12px;
+    margin-bottom:0;
+    font-weight:600;
+    transition:.15s ease;
+}
+
+.menu-item.active-menu{
+    background:#0a70b7;
+    box-shadow:0 10px 28px rgba(10,112,183,.28);
+}
+
+.menu-icon{
+    width:22px;
+    height:22px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    color:currentColor;
+}
+
+.menu-icon svg{
+    width:19px;
+    height:19px;
+    stroke:currentColor;
+    stroke-width:1.9;
+    fill:none;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
+.sidebar-footer{
+    border-top:1px solid rgba(148,163,184,.2);
+    padding:18px 8px 6px;
+    display:grid;
+    grid-template-columns:44px minmax(0, 1fr) auto;
+    align-items:center;
+    gap:12px;
+}
+
+.user-avatar{
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    background:linear-gradient(135deg, #0a70b7, #2daa36);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-weight:bold;
+    border:2px solid rgba(255,255,255,.12);
+}
+
+.user-name{
+    color:white;
+    font-size:14px;
+    font-weight:bold;
+    margin-bottom:3px;
+}
+
+.user-role{
+    color:#94a3b8;
+    font-size:12px;
+}
+
+.user-info{
+    min-width:0;
+}
+
+.user-status{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#22c55e;
+    box-shadow:0 0 0 4px rgba(34,197,94,.12);
+}
+
+.logout-button{
+    grid-column:1 / -1;
+    width:100%;
+    margin-top:8px;
+    background:#111827;
+    color:#cbd5e1;
+}
+
+.logout-button:hover{
+    background:#1f2937;
+    color:white;
+}
+
+.card,
+.form-section{
+    border-radius:8px;
+}
+
+.form-section{
+    background:#fbfdff;
+}
+
+.form-section h2{
+    padding-bottom:10px;
+    border-bottom:1px solid #e2e8f0;
+}
+
+.form-group{
+    color:#334155;
+    font-size:14px;
+    font-weight:600;
+}
+
+input,
+select,
+textarea{
+    border-color:#cbd5e1;
+    color:#0f172a;
+    background:white;
+    font-size:14px;
+}
+
+.client-row{
+    cursor:pointer;
+}
+
+.client-row:hover{
+    background:#f8fafc;
+}
+
+.consultor-group-row td{
+    background:#f1f5f9;
+    border-top:1px solid #cbd5e1;
+    border-bottom:1px solid #cbd5e1;
+    padding:10px 14px;
+}
+
+.consultor-group-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    color:#0f172a;
+    font-size:14px;
+    font-weight:700;
+}
+
+.consultor-group-title small{
+    color:#64748b;
+    font-size:12px;
+    font-weight:600;
+}
+
+.client-detail-row{
+    display:none;
+    background:#f8fafc;
+}
+
+.client-detail-row.active{
+    display:table-row;
+}
+
+.client-detail-panel{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:14px;
+    padding:18px;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+    background:white;
+}
+
+.detail-item{
+    color:#475569;
+    font-size:13px;
+    line-height:20px;
+}
+
+.detail-item strong{
+    display:block;
+    color:#0f172a;
+    font-size:12px;
+    text-transform:uppercase;
+    margin-bottom:4px;
+}
+
+.detail-actions{
+    grid-column:1 / -1;
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    padding-top:10px;
+    border-top:1px solid #e2e8f0;
+}
+
+.table-toolbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:18px;
+}
+
+.table-toolbar h2{
+    color:#0f172a;
+    font-size:20px;
+}
+
+.settings-card{
+    max-width:860px;
+}
+
+.profile-preview{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:20px;
+}
+
+.profile-preview h2{
+    color:#0f172a;
+    font-size:22px;
+    margin-bottom:4px;
+}
+
+.profile-preview p{
+    color:#64748b;
+}
+
+.profile-photo-preview{
+    width:72px;
+    height:72px;
+    border-radius:50%;
+    background:linear-gradient(135deg, #0a70b7, #2daa36);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    font-size:22px;
+    overflow:hidden;
+}
+
+.profile-photo-preview img,
+.user-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    border-radius:50%;
+}
+
+.user-avatar,
+.profile-photo-preview{
+    overflow:hidden;
+    flex-shrink:0;
+}
+
+@media (max-width:900px){
+    .client-detail-panel{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+
+<aside class="sidebar">
+
+    <div class="brand-title">
+        <div class="brand-logo">
+            <img src="/leadflow-mark.png" alt="LeadFlow">
+            <strong>LeadFlow</strong>
+        </div>
+    </div>
+
+    <div class="sidebar-menu">
+
+    <button class="menu-item active-menu" onclick="openTab('dashboard', this)">
+        <span class="menu-icon"><svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"></path><path d="M5 10.5V20h5v-5h4v5h5v-9.5"></path></svg></span>
+        Home
+    </button>
+
+    <button class="menu-item" onclick="openTab('cadastro', this)">
+        <span class="menu-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M19 8v6"></path><path d="M22 11h-6"></path></svg></span>
+        Leads
+    </button>
+
+    <button class="menu-item" onclick="openTab('agendamento', this)">
+        <span class="menu-icon"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H7l-4 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path></svg></span>
+        Atendimentos
+    </button>
+
+    <button class="menu-item" onclick="openTab('historico', this)">
+        <span class="menu-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><path d="M20 8v6"></path><path d="M23 11h-6"></path></svg></span>
+        Clientes
+    </button>
+
+    <button class="menu-item" onclick="openTab('agenda', this)">
+        <span class="menu-icon"><svg viewBox="0 0 24 24"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M3 10h18"></path></svg></span>
+        Agenda
+    </button>
+
+    <button class="menu-item" onclick="openTab('remarketing', this)">
+        <span class="menu-icon"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.64-6.36"></path><path d="M21 3v6h-6"></path><path d="M12 7v5l3 2"></path></svg></span>
+        Remarketing
+    </button>
+
+    <button class="menu-item" onclick="openTab('relatorios', this)">
+        <span class="menu-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"></path><path d="m19 9-5 5-4-4-3 3"></path></svg></span>
+        Relatórios
+    </button>
+
+    <button class="menu-item admin-only" onclick="openTab('usuarios', this)">
+        <span class="menu-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><path d="M20 8v6"></path><path d="M23 11h-6"></path></svg></span>
+        Usu&aacute;rios
+    </button>
+
+    <button class="menu-item" onclick="openTab('configuracoes', this)">
+        <span class="menu-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 8 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.6 8a1.7 1.7 0 0 0-.34-1.88l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V3a2 2 0 1 1 4 0v.09A1.7 1.7 0 0 0 16 4.6a1.7 1.7 0 0 0 1.88-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9a1.7 1.7 0 0 0 .6 1 1.7 1.7 0 0 0 1.1.4H21a2 2 0 1 1 0 4h-.09A1.7 1.7 0 0 0 19.4 15z"></path></svg></span>
+        Configurações
+    </button>
+
+    </div>
+
+    <div class="sidebar-footer">
+        <div class="user-avatar" id="avatarConsultor">LF</div>
+        <div class="user-info">
+            <div class="user-name" id="nomeConsultor"></div>
+            <div class="user-role" id="tipoUsuarioLogado">Consultor</div>
+        </div>
+        <div class="user-status"></div>
+        <button
+        class="primary logout-button"
+        onclick="logout()">
+            Sair
+        </button>
+    </div>
+</aside>
+
+
+
+
+
+<main class="content">
+
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="tab active">
+
+        <div class="home-greeting">
+            <div>
+                <span>Home</span>
+                <h1 id="saudacaoConsultor">Bem-vindo</h1>
+                <p>Veja o resumo dos seus leads, atendimentos e agenda.</p>
+            </div>
+            <div
+            class="home-greeting-time"
+            id="dataHoraAtual">
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+
+            <div class="metric-card">
+                <div>
+                    <h3>📋 Total de Leads</h3>
+                    <h1 id="totalLeads">0</h1>
+                </div>
+                <div class="metric-icon">📋</div>
+            </div>
+
+            <div class="metric-card open">
+                <div>
+                    <h3>⏳ Em Aberto</h3>
+                    <h1 id="totalAbertos">0</h1>
+                </div>
+                <div class="metric-icon">⏳</div>
+            </div>
+
+            <div class="metric-card done">
+                <div>
+                    <h3>✅ Atendidos</h3>
+                    <h1 id="totalAtendidos">0</h1>
+                </div>
+                <div class="metric-icon">✅</div>
+            </div>
+
+        </div>
+
+        <div class="card weekly-card">
+
+            <div class="weekly-header">
+
+                <div>
+                    <h2>Levantamento Semanal</h2>
+                    <p>Clientes atendidos nesta semana</p>
+                </div>
+
+                <div class="weekly-total">
+                    <span>Total</span>
+                    <div id="totalSemanalAtendidos">0</div>
+                </div>
+
+            </div>
+
+            <div
+            class="weekly-chart"
+            id="graficoSemanalAtendidos">
+            </div>
+
+        </div>
+
+        <div class="home-info-grid">
+
+            <div class="card home-panel">
+                <h2>Resumo</h2>
+                <div
+                class="summary-list"
+                id="resumoHome">
+                </div>
+            </div>
+
+            <div class="card home-panel">
+                <h2>Atividades recentes</h2>
+                <div
+                class="activity-list"
+                id="atividadesRecentes">
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+
+    <!-- CADASTRO -->
+    <section id="cadastro" class="tab">
+
+        <h1 class="page-title">Cadastrar Lead</h1>
+
+        <div class="card">
+
+            <div class="form-section">
+                <h2>Dados pessoais</h2>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        Nome
+                        <input id="nome">
+                    </div>
+
+                    <div class="form-group">
+                        Telefone
+                        <input id="telefone">
+                    </div>
+
+                    <div class="form-group full">
+                        Profissão
+                        <input id="profissao">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Perfil financeiro</h2>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        Possui Entrada
+                        <select id="possuiFgts">
+                            <option value="">Selecione</option>
+                            <option value="Sim">Sim</option>
+                            <option value="Não">Não</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        Valor da Entrada
+                        <input
+                        id="valorEntrada"
+                        inputmode="numeric"
+                        placeholder="R$ 0,00"
+                        oninput="formatarCampoMoeda(this)">
+                    </div>
+
+                    <div class="form-group">
+                        Valor da parcela
+                        <input
+                        id="valorParcela"
+                        inputmode="numeric"
+                        placeholder="R$ 0,00"
+                        oninput="formatarCampoMoeda(this)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Agendamento</h2>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        Status do cliente
+                        <select id="statusCliente">
+                            <option value="Novo">Novo</option>
+                            <option value="Confirmado">Confirmado</option>
+                            <option value="Prioridade">Prioridade</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        Interesse do imóvel
+                        <select id="interesseImovel">
+                            <option value="Casa">Casa</option>
+                            <option value="Apartamento">Apartamento</option>
+                            <option value="Sobrado">Sobrado</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        Região desejada
+                        <input id="local">
+                    </div>
+
+                    <div class="form-group">
+                        Origem do lead
+                        <select id="origem">
+                            <option value="Facebook">Facebook</option>
+                            <option value="Indicação">Indicação</option>
+                            <option value="OLX">OLX</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="Google">Google</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        Confirmou presença?
+                        <select id="confirmouPresenca">
+                            <option value="">Selecione</option>
+                            <option value="Sim">Sim</option>
+                            <option value="Não">Não</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        Último contato realizado
+                        <input
+                        type="date"
+                        id="ultimoContato">
+                    </div>
+
+                    <div class="form-group">
+                        Data agendada da visita
+                        <input
+                        type="date"
+                        id="dataVisita">
+                    </div>
+
+                    <div class="form-group">
+                        Horário do atendimento
+                        <input
+                        type="time"
+                        id="horarioAtendimento">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Histórico/observações</h2>
+
+                <div class="form-group">
+                    Observações importantes
+                    <textarea id="observacoesImportantes"></textarea>
+                </div>
+            </div>
+
+            <button class="primary"
+            onclick="salvarLead()">
+
+                Salvar Lead
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+
+    <!-- ATENDIMENTOS -->
+    <section id="agendamento" class="tab">
+
+        <h1 class="page-title">Atendimentos</h1>
+
+        <div class="card">
+
+            <div class="search-bar">
+                <input
+                id="pesquisaAgendamento"
+                placeholder="Pesquisar atendimento"
+                oninput="filtrarTabela('pesquisaAgendamento', 'listaAgendamento')">
+            </div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                    <th>Nome</th>
+                    <th>Status</th>
+                    <th>Origem</th>
+                    <th>Atendimento</th>
+                    <th>Presença</th>
+                    <th>Observação</th>
+                    <th>Data da visita</th>
+                    <th>Ações</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="listaAgendamento"></tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- AGENDA -->
+    <section id="agenda" class="tab">
+
+        <h1 class="page-title">Agenda</h1>
+
+        <div class="card">
+
+            <div class="table-toolbar">
+                <h2>Visitas agendadas</h2>
+                <span class="status atendido" id="totalAgenda">0 agendadas</span>
+            </div>
+
+            <div class="search-bar">
+                <input
+                id="pesquisaAgenda"
+                placeholder="Pesquisar na agenda"
+                oninput="filtrarTabela('pesquisaAgenda', 'listaAgenda')">
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data da visita</th>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>Origem</th>
+                        <th>Status</th>
+                        <th>Presença</th>
+                        <th>Observação</th>
+                    </tr>
+                </thead>
+                <tbody id="listaAgenda"></tbody>
+            </table>
+
+        </div>
+
+    </section>
+
+
+
+
+    <!-- HISTÓRICO -->
+    <!-- REMARKETING -->
+    <section id="remarketing" class="tab">
+
+        <h1 class="page-title">Remarketing</h1>
+
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div>
+                    <h3>Nao vai</h3>
+                    <h1 id="remarketingNaoVai">0</h1>
+                </div>
+            </div>
+
+            <div class="metric-card done">
+                <div>
+                    <h3>Confirmados</h3>
+                    <h1 id="remarketingConfirmados">0</h1>
+                </div>
+            </div>
+
+            <div class="metric-card open">
+                <div>
+                    <h3>Pendentes</h3>
+                    <h1 id="remarketingPendentes">0</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="table-toolbar">
+                <div>
+                    <h2>Leads para recontato</h2>
+                    <p class="remarketing-note">Lista automatica com quem marcou Nao vai.</p>
+                </div>
+            </div>
+
+            <div class="search-bar">
+                <input
+                id="pesquisaRemarketing"
+                placeholder="Pesquisar remarketing"
+                oninput="filtrarTabela('pesquisaRemarketing', 'listaRemarketing')">
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>Origem</th>
+                        <th>Data visita</th>
+                        <th>Presenca</th>
+                        <th>Observacao</th>
+                        <th>Acoes</th>
+                    </tr>
+                </thead>
+                <tbody id="listaRemarketing"></tbody>
+            </table>
+        </div>
+
+    </section>
+
+
+    <section id="historico" class="tab">
+
+        <h1 class="page-title">Histórico</h1>
+
+        <div class="card">
+
+            <div class="search-bar">
+                <input
+                id="pesquisaHistorico"
+                placeholder="Pesquisar histórico"
+                oninput="filtrarTabela('pesquisaHistorico', 'listaHistorico')">
+            </div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>Indicação</th>
+                        <th>Status</th>
+                        <th>Perfil</th>
+                        <th>Observações</th>
+                        <th>Ações</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="listaHistorico"></tbody>
+
+            </table>
+
+            <div class="editor-help">
+                <div class="editor-help-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
+                </div>
+                <div>
+                    <h2>Editor de cliente</h2>
+                    <p>Para atualizar cadastro, atendimento ou observacoes, clique em <strong>Editar</strong> na coluna Acoes do cliente desejado.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- RELATÓRIOS -->
+    <section id="relatorios" class="tab">
+
+        <h1 class="page-title">Relatórios</h1>
+
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div>
+                    <h3>Total de leads</h3>
+                    <h1 id="relatorioTotal">0</h1>
+                </div>
+            </div>
+
+            <div class="metric-card done">
+                <div>
+                    <h3>Atendidas</h3>
+                    <h1 id="relatorioAtendidas">0</h1>
+                </div>
+            </div>
+
+            <div class="metric-card open">
+                <div>
+                    <h3>Em aberto</h3>
+                    <h1 id="relatorioAbertas">0</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="table-toolbar">
+                <h2>Relatório geral de leads</h2>
+                <button
+                class="primary"
+                onclick="baixarRelatorioPdf()">
+                    Baixar novo modelo PDF
+                </button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>Origem</th>
+                        <th>Status</th>
+                        <th>Presença</th>
+                        <th>Data visita</th>
+                        <th>WhatsApp</th>
+                    </tr>
+                </thead>
+                <tbody id="listaRelatorio"></tbody>
+            </table>
+        </div>
+
+    </section>
+
+
+    <!-- USUARIOS -->
+    <section id="usuarios" class="tab admin-only">
+
+        <h1 class="page-title">Cadastrar usu&aacute;rios</h1>
+
+        <div class="card">
+            <div class="form-section">
+                <h2>Cadastrar usu&aacute;rio consultor</h2>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        Nome
+                        <input
+                        id="novoUsuarioNome"
+                        placeholder="Nome do consultor">
+                    </div>
+
+                    <div class="form-group">
+                        Usu&aacute;rio
+                        <input
+                        id="novoUsuarioLogin"
+                        placeholder="Login de acesso">
+                    </div>
+
+                    <div class="form-group">
+                        Senha inicial
+                        <input
+                        type="password"
+                        id="novoUsuarioSenha"
+                        placeholder="Senha do consultor">
+                    </div>
+                </div>
+
+                <button
+                class="primary"
+                onclick="criarConsultor()">
+                    Cadastrar consultor
+                </button>
+            </div>
+
+            <div class="table-toolbar">
+                <h2>Consultores cadastrados</h2>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Usu&aacute;rio</th>
+                        <th>Perfil</th>
+                        <th>A&ccedil;&otilde;es</th>
+                    </tr>
+                </thead>
+                <tbody id="listaUsuarios"></tbody>
+            </table>
+        </div>
+
+    </section>
+
+    <section id="configuracoes" class="tab">
+
+        <h1 class="page-title">Configurações</h1>
+
+        <div class="card settings-card">
+            <div class="profile-preview">
+                <div
+                class="profile-photo-preview"
+                id="configFotoPreview">
+                    LF
+                </div>
+                <div>
+                    <h2>Perfil do usuário</h2>
+                    <p>Atualize foto, nome e senha de acesso.</p>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Dados do perfil</h2>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        Foto
+                        <input
+                        type="file"
+                        id="configFoto"
+                        accept="image/*"
+                        onchange="carregarFotoPerfil()">
+                    </div>
+
+                    <div class="form-group">
+                        Nome
+                        <input id="configNome">
+                    </div>
+
+                    <div class="form-group">
+                        Nova senha
+                        <input
+                        type="password"
+                        id="configSenha"
+                        placeholder="Deixe em branco para manter">
+                    </div>
+                </div>
+            </div>
+
+            <button
+            class="primary"
+            onclick="salvarPerfilUsuario()">
+                Salvar perfil
+            </button>
+        </div>
+
+    </section>
+
+
+</main>
+
+<div
+class="message-overlay"
+id="mensagemSistema">
+
+    <div class="message-box">
+        <h2 id="mensagemTitulo">Tudo certo</h2>
+        <p id="mensagemTexto"></p>
+        <button
+        class="primary"
+        onclick="fecharMensagem()">
+            OK
+        </button>
+    </div>
+
+</div>
+
+<div
+class="message-overlay"
+id="editorCliente">
+
+    <div class="modal-box">
+        <div class="modal-header">
+            <div>
+                <h2>Editar cliente</h2>
+                <p>Altere os dados do cliente e salve para atualizar o historico.</p>
+            </div>
+            <button
+            class="modal-close"
+            onclick="fecharEditorCliente()">
+                &times;
+            </button>
+        </div>
+
+        <input
+        type="hidden"
+        id="editarClienteId">
+
+        <div class="form-section">
+            <h2>Dados pessoais</h2>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    Nome
+                    <input id="editarNome">
+                </div>
+
+                <div class="form-group">
+                    Telefone
+                    <input id="editarTelefone">
+                </div>
+
+                <div class="form-group full">
+                    Profissao
+                    <input id="editarProfissao">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Perfil financeiro</h2>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    Possui Entrada
+                    <select id="editarPossuiFgts">
+                        <option value="">Selecione</option>
+                        <option value="Sim">Sim</option>
+                        <option value="Nao">Nao</option>
+                        <option value="N&atilde;o">N&atilde;o</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    Valor da Entrada
+                    <input
+                    id="editarValorEntrada"
+                    inputmode="numeric"
+                    placeholder="R$ 0,00"
+                    oninput="formatarCampoMoeda(this)">
+                </div>
+
+                <div class="form-group">
+                    Valor da parcela
+                    <input
+                    id="editarValorParcela"
+                    inputmode="numeric"
+                    placeholder="R$ 0,00"
+                    oninput="formatarCampoMoeda(this)">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Agendamento</h2>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    Status do cliente
+                    <select id="editarStatusCliente">
+                        <option value="Novo">Novo</option>
+                        <option value="Confirmado">Confirmado</option>
+                        <option value="Prioridade">Prioridade</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    Interesse do imovel
+                    <select id="editarInteresseImovel">
+                        <option value="Casa">Casa</option>
+                        <option value="Apartamento">Apartamento</option>
+                        <option value="Sobrado">Sobrado</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    Regiao desejada
+                    <input id="editarLocal">
+                </div>
+
+                <div class="form-group">
+                    Origem do lead
+                    <select id="editarOrigem">
+                        <option value="Facebook">Facebook</option>
+                        <option value="Indicacao">Indicacao</option>
+                        <option value="Indica&ccedil;&atilde;o">Indica&ccedil;&atilde;o</option>
+                        <option value="OLX">OLX</option>
+                        <option value="Instagram">Instagram</option>
+                        <option value="Google">Google</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    Confirmou presenca?
+                    <select id="editarConfirmouPresenca">
+                        <option value="">Selecione</option>
+                        <option value="Sim">Sim</option>
+                        <option value="Nao">Nao</option>
+                        <option value="N&atilde;o">N&atilde;o</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    Atendimento
+                    <select id="editarStatusAtendimento">
+                        <option value="Aberto">Aberto</option>
+                        <option value="Atendido">Atendido</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    Ultimo contato realizado
+                    <input
+                    type="date"
+                    id="editarUltimoContato">
+                </div>
+
+                <div class="form-group">
+                    Data agendada da visita
+                    <input
+                    type="date"
+                    id="editarDataVisita">
+                </div>
+
+                <div class="form-group">
+                    Horario do atendimento
+                    <input
+                    type="time"
+                    id="editarHorarioAtendimento">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Historico/observacoes</h2>
+
+            <div class="form-group">
+                Observacoes importantes
+                <textarea id="editarObservacoesImportantes"></textarea>
+            </div>
+
+            <div class="form-group">
+                Observacao do atendimento
+                <textarea id="editarObservacao"></textarea>
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button
+            class="secondary"
+            onclick="fecharEditorCliente()">
+                Cancelar
+            </button>
+
+            <button
+            class="primary"
+            onclick="salvarEdicaoCliente()">
+                Salvar alteracoes
+            </button>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+<script>
+let usuarioLogado = null;
+
+try{
+
+    usuarioLogado =
+    JSON.parse(
+        localStorage.getItem("usuario")
+    );
+
+}catch(erro){
+
+    usuarioLogado = null;
+
+}
+
+if(!usuarioLogado || !usuarioLogado.id){
+
+    window.location.replace("/login");
+
+}
+
+let fotoPerfilSelecionada =
+usuarioLogado
+? usuarioLogado.foto_perfil || ""
+: "";
+
+function usuarioEhAdmin(){
+
+    if(!usuarioLogado){
+        return false;
+    }
+
+    return (
+        usuarioLogado.tipo == "admin" ||
+        (
+            !usuarioLogado.tipo &&
+            String(usuarioLogado.id) == "1"
+        )
+    );
+
+}
+
+function aplicarPermissoesUsuario(){
+
+    const admin =
+    usuarioEhAdmin();
+
+    document
+    .querySelectorAll(".admin-only")
+    .forEach((elemento)=>{
+
+        elemento.style.display =
+        admin
+        ? ""
+        : "none";
+
+    });
+
+    const tipo =
+    document.getElementById("tipoUsuarioLogado");
+
+    if(tipo){
+
+        tipo.innerText =
+        admin
+        ? "Administrador"
+        : "Consultor";
+
+    }
+
+}
+
+function mostrarMensagem(texto, titulo = "Tudo certo"){
+
+    document
+    .getElementById("mensagemTitulo")
+    .innerText = titulo;
+
+    document
+    .getElementById("mensagemTexto")
+    .innerText = texto;
+
+    document
+    .getElementById("mensagemSistema")
+    .classList
+    .add("active");
+
+}
+
+function fecharMensagem(){
+
+    document
+    .getElementById("mensagemSistema")
+    .classList
+    .remove("active");
+
+}
+
+function iniciaisUsuario(nome){
+
+    return (nome || "LeadFlow")
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((parte)=>parte[0])
+    .join("")
+    .toUpperCase();
+
+}
+
+async function salvarAgendamento(id){
+
+    const status =
+    document.getElementById(
+        `status-${id}`
+    ).value;
+
+
+
+    const observacao =
+    document.getElementById(
+        `obs-${id}`
+    ).value;
+
+
+
+    await fetch("/status",{
+
+        method:"PUT",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+   body:JSON.stringify({
+
+    id,
+    status,
+    observacao
+
+})  
+
+    });
+
+
+
+    mostrarMensagem(
+        "Agendamento salvo com sucesso."
+    );
+
+
+
+    renderizar();
+
+}
+
+if(usuarioLogado){
+
+    document
+.getElementById("nomeConsultor")
+.innerText =
+usuarioLogado.nome;
+
+document
+.getElementById("avatarConsultor")
+.innerHTML =
+fotoPerfilSelecionada
+? `<img src="${fotoPerfilSelecionada}" alt="Foto do usuário">`
+: iniciaisUsuario(usuarioLogado.nome);
+
+aplicarPermissoesUsuario();
+
+}
+
+function periodoDoDia(){
+
+    const hora =
+    new Date().getHours();
+
+    if(hora < 12){
+        return "Bom dia";
+    }
+
+    if(hora < 18){
+        return "Boa tarde";
+    }
+
+    return "Boa noite";
+
+}
+
+function atualizarSaudacaoConsultor(){
+
+    const saudacao =
+    document.getElementById("saudacaoConsultor");
+
+    if(!saudacao){
+        return;
+    }
+
+    const nome =
+    usuarioLogado
+    ? usuarioLogado.nome || "Consultor"
+    : "Consultor";
+
+    saudacao.innerText =
+    `${periodoDoDia()}, ${nome}`;
+
+}
+
+function atualizarDataHora(){
+
+    const campoDataHora =
+    document.getElementById("dataHoraAtual");
+
+    if(!campoDataHora){
+        return;
+    }
+
+    const agora =
+    new Date();
+
+    campoDataHora.innerText =
+    agora.toLocaleString(
+        "pt-BR",
+        {
+            dateStyle:"short",
+            timeStyle:"medium"
+        }
+    );
+
+}
+
+atualizarSaudacaoConsultor();
+atualizarDataHora();
+setInterval(atualizarSaudacaoConsultor, 60000);
+setInterval(atualizarDataHora, 1000);
+if(usuarioLogado){
+    preencherConfiguracoes();
+}
+
+let leads = [];
+async function alterarStatus(id, status){
+
+    await fetch("/status",{
+
+        method:"PUT",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+
+            id,
+            status,
+            observacao:""
+
+        })
+
+    });
+
+    renderizar();
+
+}
+async function salvarObservacao(id, observacao){
+
+    await fetch("/status",{
+
+        method:"PUT",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+
+            id,
+            status:"Atendido",
+            observacao
+
+        })
+
+    });
+
+}
+
+
+
+function openTab(tab, botaoClicado){
+
+    if(tab == "usuarios" && !usuarioEhAdmin()){
+
+        mostrarMensagem(
+            "Apenas administradores podem acessar usuarios.",
+            "Atencao"
+        );
+        return;
+
+    }
+
+    document
+    .querySelectorAll(".tab")
+    .forEach(x=>x.classList.remove("active"));
+
+    document
+    .getElementById(tab)
+    .classList.add("active");
+
+    document
+    .querySelectorAll(".menu-item")
+    .forEach(item=>item.classList.remove("active-menu"));
+
+    const botao =
+    botaoClicado ||
+    document.querySelector(
+        `.menu-item[onclick="openTab('${tab}', this)"]`
+    );
+
+    if(botao){
+        botao.classList.add("active-menu");
+    }
+
+    if(tab == "usuarios"){
+        renderizarUsuarios();
+    }
+
+}
+
+function filtrarTabela(inputId, tbodyId){
+
+    const input =
+    document.getElementById(inputId);
+
+    const tbody =
+    document.getElementById(tbodyId);
+
+    if(!input || !tbody){
+        return;
+    }
+
+    const termo =
+    input.value.toLowerCase().trim();
+
+    tbody
+    .querySelectorAll("tr")
+    .forEach((linha)=>{
+
+        const texto =
+        (
+            linha.dataset.search ||
+            linha.innerText
+        )
+        .toLowerCase();
+
+        linha.style.display =
+        texto.includes(termo)
+        ? ""
+        : "none";
+
+    });
+
+}
+
+function textoBuscaLead(lead){
+
+    return [
+        lead.nome,
+        lead.local_desejado,
+        lead.telefone,
+        lead.origem,
+        lead.status_cliente,
+        lead.interesse_imovel,
+        lead.possui_fgts,
+        lead.score_aproximado,
+        lead.valor_entrada,
+        lead.valor_parcela,
+        lead.profissao,
+        lead.confirmou_presenca,
+        lead.ultimo_contato,
+        lead.data_visita,
+        lead.horario_atendimento,
+        lead.observacoes_importantes,
+        lead.status,
+        lead.observacao
+    ]
+    .filter(Boolean)
+    .join(" ")
+    .replace(/"/g, "&quot;");
+
+}
+
+function campoLead(valor){
+
+    return valor || "-";
+
+}
+
+function formatarCampoMoeda(input){
+
+    const numeros =
+    input.value.replace(/\D/g, "");
+
+    const valor =
+    Number(numeros || 0) / 100;
+
+    input.value =
+    valor.toLocaleString(
+        "pt-BR",
+        {
+            style:"currency",
+            currency:"BRL"
+        }
+    );
+
+}
+
+function moedaParaNumero(valor){
+
+    const numeros =
+    String(valor || "").replace(/\D/g, "");
+
+    return Number(numeros || 0) / 100;
+
+}
+
+function formatarDinheiro(valor){
+
+    const numero =
+    Number(valor || 0);
+
+    if(!numero){
+        return "-";
+    }
+
+    return numero.toLocaleString(
+        "pt-BR",
+        {
+            style:"currency",
+            currency:"BRL"
+        }
+    );
+
+}
+
+function dataLead(valor){
+
+    if(!valor){
+        return "-";
+    }
+
+    const texto =
+    String(valor);
+
+    const dataIso =
+    texto.match(/^(\d{4})-(\d{2})-(\d{2})/);
+
+    if(dataIso){
+        return `${dataIso[3]}/${dataIso[2]}/${dataIso[1]}`;
+    }
+
+    const data =
+    new Date(valor);
+
+    if(isNaN(data.getTime())){
+        return "-";
+    }
+
+    return data
+    .toLocaleDateString("pt-BR");
+
+}
+
+function textosIguais(valorA, valorB){
+
+    return String(valorA || "").trim() == String(valorB || "").trim();
+
+}
+
+function observacaoAtendimentoLead(lead){
+
+    if(!lead || !lead.observacao){
+        return "";
+    }
+
+    if(textosIguais(lead.observacao, lead.observacoes_importantes)){
+        return "";
+    }
+
+    return lead.observacao;
+
+}
+
+function protocoloLead(lead){
+
+    return `LF-${String(lead.id || 0).padStart(6, "0")}`;
+
+}
+
+function telefoneWhatsApp(valor){
+
+    const numeros =
+    String(valor || "").replace(/\D/g, "");
+
+    if(!numeros){
+        return "";
+    }
+
+    if(numeros.startsWith("55")){
+        return numeros;
+    }
+
+    if(numeros.length == 10 || numeros.length == 11){
+        return `55${numeros}`;
+    }
+
+    return numeros;
+
+}
+
+function mensagemWhatsAppLead(lead){
+
+    const protocolo =
+    protocoloLead(lead);
+
+    const observacaoCampo =
+    document.getElementById(`obs-${lead.id}`);
+
+    const observacao =
+    observacaoCampo && observacaoCampo.value
+    ? observacaoCampo.value
+    : observacaoAtendimentoLead(lead) || lead.observacoes_importantes || "-";
+
+    return [
+        `Ola, ${lead.nome || "cliente"}!`,
+        "",
+        "Estamos confirmando seu atendimento pela LeadFlow.",
+        "",
+        `Data e horario: ${dataHoraAtendimentoLead(lead)}`,
+        `Regiao desejada: ${campoLead(lead.local_desejado)}`,
+        `Consultor: ${usuarioLogado ? usuarioLogado.nome : lead.consultor || "LeadFlow"}`,
+        `Protocolo: ${protocolo}`,
+        "",
+        "Por favor, responda com uma das opcoes:",
+        "1 - Sim, vou comparecer",
+        "2 - Nao vou comparecer",
+        "",
+        "Se precisar remarcar, pode responder por aqui tambem.",
+        "",
+        `Observacao: ${campoLead(observacao)}`,
+        "",
+        "LeadFlow"
+    ]
+    .join("\n");
+
+}
+
+function mensagemRemarketingLead(){
+
+    return [
+        "Olá, tudo bem?",
+        "",
+        "Vi que você não conseguiu comparecer à visita agendada. Queria muito ajudar você a dar continuidade à compra do seu imóvel, mas algumas condições podem não ficar disponíveis por muito tempo. Tenho vaga essas semana ainda"
+    ]
+    .join("\n");
+
+}
+
+function normalizarPresenca(valor){
+
+    const texto =
+    String(valor || "")
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
+    if(texto == "sim"){
+        return "Sim";
+    }
+
+    if(texto == "nao" || texto.startsWith("na")){
+        return "Nao";
+    }
+
+    return "";
+
+}
+
+function leadConfirmouPresenca(lead){
+
+    return normalizarPresenca(lead && lead.confirmou_presenca) == "Sim";
+
+}
+
+function leadNaoVai(lead){
+
+    return normalizarPresenca(lead && lead.confirmou_presenca) == "Nao";
+
+}
+
+function textoPresenca(valor){
+
+    const presenca =
+    normalizarPresenca(valor);
+
+    if(presenca == "Sim"){
+        return "Confirmou";
+    }
+
+    if(presenca == "Nao"){
+        return "Nao vai";
+    }
+
+    return "Pendente";
+
+}
+
+function classePresenca(valor){
+
+    const presenca =
+    normalizarPresenca(valor);
+
+    if(presenca == "Sim"){
+        return "presence-confirmou";
+    }
+
+    if(presenca == "Nao"){
+        return "presence-nao-vai";
+    }
+
+    return "presence-pendente";
+
+}
+
+function badgePresenca(valor){
+
+    return `
+        <span class="presence-badge ${classePresenca(valor)}">
+            ${textoPresenca(valor)}
+        </span>
+    `;
+
+}
+
+async function confirmarPresencaLead(id, valor){
+
+    const presenca =
+    normalizarPresenca(valor);
+
+    const response =
+    await fetch(
+        "/lead/" + id + "/presenca",
+        {
+            method:"PUT",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                confirmou_presenca:presenca
+            })
+        }
+    );
+
+    const resultado =
+    await response.json();
+
+    if(!resultado.success){
+
+        mostrarMensagem(
+            "Nao foi possivel atualizar a presenca.",
+            "Atencao"
+        );
+        return;
+
+    }
+
+    await renderizar();
+
+    mostrarMensagem(
+        presenca == "Sim"
+        ? "Presenca confirmada."
+        : "Lead enviado para remarketing."
+    );
+
+}
+
+function botoesConfirmacaoPresenca(lead){
+
+    const id =
+    typeof lead == "object"
+    ? lead.id
+    : lead;
+
+    const presenca =
+    typeof lead == "object"
+    ? normalizarPresenca(lead.confirmou_presenca)
+    : "";
+
+    const confirmouAtivo =
+    presenca == "Sim"
+    ? "active"
+    : "";
+
+    const naoVaiAtivo =
+    presenca == "Nao"
+    ? "active"
+    : "";
+
+    return `
+        <div class="presence-actions">
+        <button
+        class="presence-button confirmou ${confirmouAtivo}"
+        onclick="event.stopPropagation(); confirmarPresencaLead(${id}, 'Sim')">
+            Confirmou
+        </button>
+
+        <button
+        class="presence-button nao-vai ${naoVaiAtivo}"
+        onclick="event.stopPropagation(); confirmarPresencaLead(${id}, 'Nao')">
+            Nao vai
+        </button>
+        </div>
+    `;
+
+}
+
+function textoConsultorAdmin(lead){
+
+    if(!usuarioEhAdmin()){
+        return "";
+    }
+
+    return `<br><strong>Consultor:</strong> ${campoLead(lead.consultor)}`;
+
+}
+
+function abrirWhatsAppLead(id){
+
+    const lead =
+    leads.find((item)=>String(item.id) == String(id));
+
+    if(!lead){
+        mostrarMensagem("Lead nao encontrado.", "Atencao");
+        return;
+    }
+
+    const telefone =
+    telefoneWhatsApp(lead.telefone);
+
+    if(!telefone){
+        mostrarMensagem("Este lead nao tem telefone para WhatsApp.", "Atencao");
+        return;
+    }
+
+    const url =
+    `https://wa.me/${telefone}?text=${encodeURIComponent(mensagemWhatsAppLead(lead))}`;
+
+    window.open(url, "_blank");
+
+}
+
+function abrirWhatsAppRemarketingLead(id){
+
+    const lead =
+    leads.find((item)=>String(item.id) == String(id));
+
+    if(!lead){
+        mostrarMensagem("Lead nao encontrado.", "Atencao");
+        return;
+    }
+
+    const telefone =
+    telefoneWhatsApp(lead.telefone);
+
+    if(!telefone){
+        mostrarMensagem("Este lead nao tem telefone para WhatsApp.", "Atencao");
+        return;
+    }
+
+    const url =
+    `https://wa.me/${telefone}?text=${encodeURIComponent(mensagemRemarketingLead(lead))}`;
+
+    window.open(url, "_blank");
+
+}
+
+function dataParaInput(valor){
+
+    if(!valor){
+        return "";
+    }
+
+    const texto =
+    String(valor);
+
+    const dataIso =
+    texto.match(/^(\d{4})-(\d{2})-(\d{2})/);
+
+    if(dataIso){
+        return `${dataIso[1]}-${dataIso[2]}-${dataIso[3]}`;
+    }
+
+    const data =
+    new Date(valor);
+
+    if(isNaN(data.getTime())){
+        return "";
+    }
+
+    const ano =
+    data.getFullYear();
+
+    const mes =
+    String(data.getMonth() + 1).padStart(2, "0");
+
+    const dia =
+    String(data.getDate()).padStart(2, "0");
+
+    return `${ano}-${mes}-${dia}`;
+
+}
+
+function horaAtendimentoLead(valor){
+
+    if(!valor){
+        return "";
+    }
+
+    const texto =
+    String(valor);
+
+    const hora =
+    texto.match(/(\d{2}):(\d{2})/);
+
+    return hora
+    ? `${hora[1]}:${hora[2]}`
+    : "";
+
+}
+
+function dataHoraAtendimentoLead(lead){
+
+    const data =
+    dataLead(lead.data_visita);
+
+    const hora =
+    horaAtendimentoLead(lead.horario_atendimento);
+
+    if(!hora){
+        return data;
+    }
+
+    return `${data} ${hora}`;
+
+}
+
+function definirValorCampo(id, valor){
+
+    const campo =
+    document.getElementById(id);
+
+    if(!campo){
+        return;
+    }
+
+    campo.value =
+    valor || "";
+
+}
+
+function definirValorSelect(id, valor){
+
+    const campo =
+    document.getElementById(id);
+
+    if(!campo){
+        return;
+    }
+
+    const valorCampo =
+    valor || "";
+
+    const existe =
+    Array
+    .from(campo.options)
+    .some((option)=>option.value == valorCampo);
+
+    if(valorCampo && !existe){
+
+        const option =
+        document.createElement("option");
+
+        option.value =
+        valorCampo;
+
+        option.textContent =
+        valorCampo;
+
+        campo.appendChild(option);
+
+    }
+
+    campo.value =
+    valorCampo;
+
+}
+
+function abrirEditorCliente(id){
+
+    const lead =
+    leads.find((item)=>String(item.id) == String(id));
+
+    if(!lead){
+
+        mostrarMensagem(
+            "Cliente nao encontrado.",
+            "Atencao"
+        );
+        return;
+
+    }
+
+    definirValorCampo("editarClienteId", lead.id);
+    definirValorCampo("editarNome", lead.nome);
+    definirValorCampo("editarTelefone", lead.telefone);
+    definirValorCampo("editarProfissao", lead.profissao);
+    definirValorSelect("editarPossuiFgts", lead.possui_fgts);
+    definirValorCampo(
+        "editarValorEntrada",
+        formatarDinheiro(
+            lead.valor_entrada ||
+            moedaParaNumero(lead.score_aproximado)
+        )
+    );
+    definirValorCampo("editarValorParcela", formatarDinheiro(lead.valor_parcela));
+    definirValorSelect("editarStatusCliente", lead.status_cliente);
+    definirValorSelect("editarInteresseImovel", lead.interesse_imovel);
+    definirValorCampo("editarLocal", lead.local_desejado);
+    definirValorSelect("editarOrigem", lead.origem);
+    definirValorSelect("editarConfirmouPresenca", lead.confirmou_presenca);
+    definirValorSelect("editarStatusAtendimento", lead.status || "Aberto");
+    definirValorCampo("editarUltimoContato", dataParaInput(lead.ultimo_contato));
+    definirValorCampo("editarDataVisita", dataParaInput(lead.data_visita));
+    definirValorCampo("editarHorarioAtendimento", horaAtendimentoLead(lead.horario_atendimento));
+    definirValorCampo("editarObservacoesImportantes", lead.observacoes_importantes);
+    definirValorCampo("editarObservacao", lead.observacao);
+
+    document
+    .getElementById("editorCliente")
+    .classList
+    .add("active");
+
+}
+
+function fecharEditorCliente(){
+
+    document
+    .getElementById("editorCliente")
+    .classList
+    .remove("active");
+
+}
+
+async function salvarEdicaoCliente(){
+
+    const id =
+    document.getElementById("editarClienteId").value;
+
+    const lead =
+    leads.find((item)=>String(item.id) == String(id));
+
+    const nome =
+    document.getElementById("editarNome").value.trim();
+
+    const telefone =
+    document.getElementById("editarTelefone").value.trim();
+
+    const local =
+    document.getElementById("editarLocal").value.trim();
+
+    if(!nome || !telefone || !local){
+
+        mostrarMensagem(
+            "Preencha nome, telefone e regiao desejada.",
+            "Atencao"
+        );
+        return;
+
+    }
+
+    const response =
+    await fetch(
+        "/lead/" + id,
+        {
+            method:"PUT",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                nome,
+                telefone,
+                local,
+                profissao:document.getElementById("editarProfissao").value,
+                possui_fgts:document.getElementById("editarPossuiFgts").value,
+                valor_entrada:moedaParaNumero(
+                    document.getElementById("editarValorEntrada").value
+                ),
+                valor_parcela:moedaParaNumero(
+                    document.getElementById("editarValorParcela").value
+                ),
+                status_cliente:document.getElementById("editarStatusCliente").value,
+                interesse_imovel:document.getElementById("editarInteresseImovel").value,
+                origem:document.getElementById("editarOrigem").value,
+                confirmou_presenca:normalizarPresenca(document.getElementById("editarConfirmouPresenca").value),
+                status:document.getElementById("editarStatusAtendimento").value,
+                ultimo_contato:document.getElementById("editarUltimoContato").value,
+                data_visita:document.getElementById("editarDataVisita").value,
+                horario_atendimento:document.getElementById("editarHorarioAtendimento").value,
+                observacoes_importantes:
+                document.getElementById("editarObservacoesImportantes").value,
+                observacao:document.getElementById("editarObservacao").value,
+                consultor_id:usuarioEhAdmin()
+                ? lead && lead.consultor_id
+                : usuarioLogado.id
+            })
+        }
+    );
+
+    const resultado =
+    await response.json();
+
+    if(!resultado.success){
+
+        mostrarMensagem(
+            resultado.message || "Nao foi possivel atualizar o cliente.",
+            "Atencao"
+        );
+        return;
+
+    }
+
+    fecharEditorCliente();
+    await renderizar();
+    mostrarMensagem("Cliente atualizado com sucesso.");
+
+}
+
+function inicioDaSemana(data){
+
+    const inicio =
+    new Date(data);
+
+    const dia =
+    inicio.getDay();
+
+    const diferenca =
+    dia == 0
+    ? -6
+    : 1 - dia;
+
+    inicio.setDate(
+        inicio.getDate() + diferenca
+    );
+
+    inicio.setHours(0,0,0,0);
+
+    return inicio;
+
+}
+
+function renderizarGraficoSemanal(leads){
+
+    const grafico =
+    document.getElementById("graficoSemanalAtendidos");
+
+    const total =
+    document.getElementById("totalSemanalAtendidos");
+
+    if(!grafico || !total){
+        return;
+    }
+
+    const dias =
+    ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
+
+    const contagem =
+    [0,0,0,0,0,0,0];
+
+    const inicio =
+    inicioDaSemana(new Date());
+
+    const fim =
+    new Date(inicio);
+
+    fim.setDate(
+        inicio.getDate() + 7
+    );
+
+    leads.forEach((lead)=>{
+
+        if(
+            lead.status != "Atendido" ||
+            !lead.atendido_em
+        ){
+            return;
+        }
+
+        const data =
+        new Date(lead.atendido_em);
+
+        if(data < inicio || data >= fim){
+            return;
+        }
+
+        const indice =
+        data.getDay() == 0
+        ? 6
+        : data.getDay() - 1;
+
+        contagem[indice]++;
+
+    });
+
+    const maior =
+    Math.max(...contagem, 1);
+
+    const totalSemana =
+    contagem.reduce(
+        (soma, valor)=>soma + valor,
+        0
+    );
+
+    total.innerText =
+    totalSemana;
+
+    grafico.innerHTML =
+    contagem
+    .map((valor, indice)=>{
+
+        const altura =
+        Math.max(
+            (valor / maior) * 160,
+            valor > 0 ? 16 : 8
+        );
+
+        return `
+        <div class="chart-day">
+            <div class="chart-value">${valor}</div>
+            <div
+            class="chart-bar"
+            style="height:${altura}px">
+            </div>
+            <div class="chart-label">${dias[indice]}</div>
+        </div>
+        `;
+
+    })
+    .join("");
+
+}
+
+function escaparHtml(valor){
+
+    return String(valor || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+function nomeConsultorLead(lead){
+
+    const nome =
+    lead && lead.consultor
+    ? lead.consultor
+    : "";
+
+    if(nome){
+        return nome;
+    }
+
+    return lead && lead.consultor_id
+    ? `Consultor ${lead.consultor_id}`
+    : "Sem consultor";
+
+}
+
+function agruparLeadsPorConsultor(lista){
+
+    if(!usuarioEhAdmin()){
+        return [{
+            nome:"",
+            leads:lista
+        }];
+    }
+
+    const grupos =
+    new Map();
+
+    lista.forEach((lead)=>{
+
+        const chave =
+        String(lead.consultor_id || nomeConsultorLead(lead));
+
+        if(!grupos.has(chave)){
+
+            grupos.set(
+                chave,
+                {
+                    nome:nomeConsultorLead(lead),
+                    consultor_id:lead.consultor_id,
+                    leads:[]
+                }
+            );
+
+        }
+
+        grupos
+        .get(chave)
+        .leads
+        .push(lead);
+
+    });
+
+    return Array
+    .from(grupos.values())
+    .sort((a,b)=>a.nome.localeCompare(b.nome, "pt-BR"));
+
+}
+
+function linhaGrupoConsultor(grupo, colspan, opcoes = {}){
+
+    if(!usuarioEhAdmin()){
+        return "";
+    }
+
+    const total =
+    grupo.leads.length;
+
+    const textoTotal =
+    total == 1
+    ? "1 lead"
+    : `${total} leads`;
+
+    const titulo =
+    opcoes.relatorio && grupo.consultor_id
+    ? `
+        <button
+        class="consultor-report-button"
+        onclick="baixarRelatorioConsultor(${grupo.consultor_id})">
+            Consultor: ${escaparHtml(grupo.nome)}
+        </button>
+    `
+    : `<span>Consultor: ${escaparHtml(grupo.nome)}</span>`;
+
+    return `
+        <tr
+        class="consultor-group-row"
+        data-search="${escaparHtml(grupo.nome)}">
+            <td colspan="${colspan}">
+                <div class="consultor-group-title">
+                    ${titulo}
+                    <small>${textoTotal}</small>
+                </div>
+            </td>
+        </tr>
+    `;
+
+}
+
+async function renderizarUsuarios(){
+
+    if(!usuarioEhAdmin()){
+        return;
+    }
+
+    const lista =
+    document.getElementById("listaUsuarios");
+
+    if(!lista){
+        return;
+    }
+
+    const response =
+    await fetch(
+        "/admin/usuarios?admin_id=" +
+        encodeURIComponent(usuarioLogado.id)
+    );
+
+    const resultado =
+    await response.json();
+
+    if(!resultado.success){
+
+        lista.innerHTML =
+        `<tr><td colspan="4">Nao foi possivel carregar os usuarios.</td></tr>`;
+        return;
+
+    }
+
+    const consultores =
+    resultado.usuarios
+    .filter((usuario)=>usuario.tipo == "consultor");
+
+    if(consultores.length == 0){
+
+        lista.innerHTML =
+        `<tr><td colspan="4">Nenhum consultor cadastrado.</td></tr>`;
+        return;
+
+    }
+
+    lista.innerHTML =
+    consultores
+    .map((usuario)=>`
+        <tr>
+            <td>${escaparHtml(usuario.nome)}</td>
+            <td>${escaparHtml(usuario.usuario)}</td>
+            <td>Consultor</td>
+            <td>
+                <button
+                class="danger"
+                onclick="excluirConsultor(${usuario.id})">
+                    Excluir
+                </button>
+            </td>
+        </tr>
+    `)
+    .join("");
+
+}
+
+async function criarConsultor(){
+
+    const nome =
+    document.getElementById("novoUsuarioNome").value.trim();
+
+    const usuario =
+    document.getElementById("novoUsuarioLogin").value.trim();
+
+    const senha =
+    document.getElementById("novoUsuarioSenha").value.trim();
+
+    if(!nome || !usuario || !senha){
+
+        mostrarMensagem(
+            "Preencha nome, usuario e senha.",
+            "Atencao"
+        );
+        return;
+
+    }
+
+    let resultado = {
+        success:false,
+        message:"Nao foi possivel criar o consultor."
+    };
+
+    try{
+
+        const response =
+        await fetch(
+            "/admin/usuarios",
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    admin_id:usuarioLogado.id,
+                    nome,
+                    usuario,
+                    senha
+                })
+            }
+        );
+
+        resultado =
+        await response.json();
+
+    }catch(err){
+
+        resultado = {
+            success:false,
+            message:"Falha de conexao ao criar o consultor."
+        };
+
+    }
+
+    if(!resultado.success){
+
+        mostrarMensagem(
+            resultado.message || "Nao foi possivel criar o consultor.",
+            "Atencao"
+        );
+        return;
+
+    }
+
+    document.getElementById("novoUsuarioNome").value = "";
+    document.getElementById("novoUsuarioLogin").value = "";
+    document.getElementById("novoUsuarioSenha").value = "";
+
+    await renderizarUsuarios();
+    mostrarMensagem("Consultor criado com sucesso.");
+
+}
+
+async function excluirConsultor(id){
+
+    const confirmar =
+    confirm("Deseja excluir este consultor?");
+
+    if(!confirmar){
+        return;
+    }
+
+    const response =
+    await fetch(
+        "/admin/usuarios/" + id +
+        "?admin_id=" + encodeURIComponent(usuarioLogado.id),
+        {
+            method:"DELETE"
+        }
+    );
+
+    const resultado =
+    await response.json();
+
+    if(!resultado.success){
+
+        mostrarMensagem(
+            resultado.message || "Nao foi possivel excluir o consultor.",
+            "Atencao"
+        );
+        return;
+
+    }
+
+    await renderizarUsuarios();
+    mostrarMensagem("Consultor excluido com sucesso.");
+
+}
+
+function contarPorCampo(leads, campo){
+
+    const contagem = {};
+
+    leads.forEach((lead)=>{
+
+        const valor =
+        lead[campo] || "Sem informação";
+
+        contagem[valor] =
+        (contagem[valor] || 0) + 1;
+
+    });
+
+    const itens =
+    Object.entries(contagem)
+    .sort((a,b)=>b[1] - a[1]);
+
+    return itens[0] || ["-", 0];
+
+}
+
+function renderizarResumoHome(leads, abertos, atendidos){
+
+    const resumo =
+    document.getElementById("resumoHome");
+
+    if(!resumo){
+        return;
+    }
+
+    const total =
+    leads.length;
+
+    const percentualAtendidos =
+    total
+    ? Math.round((atendidos / total) * 100)
+    : 0;
+
+    const origemPrincipal =
+    contarPorCampo(leads, "origem");
+
+    const regiaoPrincipal =
+    contarPorCampo(leads, "local_desejado");
+
+    resumo.innerHTML = `
+        <div class="summary-item">
+            <span>Taxa de atendimento</span>
+            <strong>${percentualAtendidos}%</strong>
+        </div>
+
+        <div class="summary-item">
+            <span>Leads pendentes</span>
+            <strong>${abertos}</strong>
+        </div>
+
+        <div class="summary-item">
+            <span>Origem com mais leads</span>
+            <strong>${escaparHtml(origemPrincipal[0])}</strong>
+        </div>
+
+        <div class="summary-item">
+            <span>Região mais procurada</span>
+            <strong>${escaparHtml(regiaoPrincipal[0])}</strong>
+        </div>
+    `;
+
+}
+
+function dataAtividadeLead(lead){
+
+    if(lead.atendido_em){
+        return new Date(lead.atendido_em);
+    }
+
+    if(lead.ultimo_contato){
+        return new Date(lead.ultimo_contato);
+    }
+
+    return null;
+
+}
+
+function textoDataAtividade(lead){
+
+    const data =
+    dataAtividadeLead(lead);
+
+    if(!data || isNaN(data.getTime())){
+        return "Recente";
+    }
+
+    return data.toLocaleDateString(
+        "pt-BR",
+        {
+            day:"2-digit",
+            month:"2-digit"
+        }
+    );
+
+}
+
+function renderizarAtividadesRecentes(leads){
+
+    const lista =
+    document.getElementById("atividadesRecentes");
+
+    if(!lista){
+        return;
+    }
+
+    if(leads.length == 0){
+
+        lista.innerHTML =
+        `<div class="empty-state">Nenhuma atividade recente.</div>`;
+
+        return;
+
+    }
+
+    const recentes =
+    [...leads]
+    .sort((a,b)=>{
+
+        const dataA =
+        dataAtividadeLead(a);
+
+        const dataB =
+        dataAtividadeLead(b);
+
+        const valorA =
+        dataA && !isNaN(dataA.getTime())
+        ? dataA.getTime()
+        : Number(a.id || 0);
+
+        const valorB =
+        dataB && !isNaN(dataB.getTime())
+        ? dataB.getTime()
+        : Number(b.id || 0);
+
+        return valorB - valorA;
+
+    })
+    .slice(0, 5);
+
+    lista.innerHTML =
+    recentes
+    .map((lead)=>{
+
+        const atendido =
+        lead.status == "Atendido";
+
+        const icone =
+        atendido
+        ? "✅"
+        : "⏳";
+
+        const statusClasse =
+        atendido
+        ? "atendido"
+        : "aberto";
+
+        return `
+        <div class="activity-item">
+            <div class="activity-icon">${icone}</div>
+            <div>
+                <div class="activity-title">${escaparHtml(lead.nome || "Lead sem nome")}</div>
+                <div class="activity-meta">
+                    <span class="status ${statusClasse}">${escaparHtml(lead.status)}</span>
+                    ${escaparHtml(lead.origem || "-")} · ${escaparHtml(lead.local_desejado || "-")}
+                </div>
+            </div>
+            <div class="activity-date">${textoDataAtividade(lead)}</div>
+        </div>
+        `;
+
+    })
+    .join("");
+
+}
+
+function alternarDetalhesCliente(id){
+
+    const linha =
+    document.getElementById(`detalhes-${id}`);
+
+    if(!linha){
+        return;
+    }
+
+    linha.classList.toggle("active");
+
+}
+
+function baixarRelatorioPdf(){
+
+    const parametros =
+    usuarioEhAdmin()
+    ? `consultor_id=all&admin_id=${encodeURIComponent(usuarioLogado.id)}`
+    : `consultor_id=${encodeURIComponent(usuarioLogado.id)}`;
+
+    window.location.href =
+    "/relatorio.pdf?" +
+    parametros +
+    "&t=" +
+    Date.now();
+
+}
+
+function baixarRelatorioConsultor(consultorId){
+
+    if(!usuarioEhAdmin()){
+        return;
+    }
+
+    window.location.href =
+    "/relatorio.pdf?consultor_id=" +
+    encodeURIComponent(consultorId) +
+    "&admin_id=" +
+    encodeURIComponent(usuarioLogado.id) +
+    "&t=" +
+    Date.now();
+
+}
+
+function renderizarRelatorio(leads, abertos, atendidos){
+
+    const lista =
+    document.getElementById("listaRelatorio");
+
+    if(!lista){
+        return;
+    }
+
+    document
+    .getElementById("relatorioTotal")
+    .innerText = leads.length;
+
+    document
+    .getElementById("relatorioAtendidas")
+    .innerText = atendidos;
+
+    document
+    .getElementById("relatorioAbertas")
+    .innerText = abertos;
+
+    const grupos =
+    agruparLeadsPorConsultor(leads);
+
+    lista.innerHTML =
+    grupos
+    .map((grupo)=>[
+        linhaGrupoConsultor(grupo, 7, { relatorio:true }),
+        ...grupo.leads.map((lead)=>`
+        <tr>
+            <td>${escaparHtml(lead.nome)}</td>
+            <td>${escaparHtml(lead.telefone)}</td>
+            <td>${escaparHtml(lead.origem || "-")}</td>
+            <td>
+                <span class="status ${lead.status=="Aberto" ? "aberto" : "atendido"}">
+                    ${escaparHtml(lead.status)}
+                </span>
+            </td>
+            <td>${badgePresenca(lead.confirmou_presenca)}</td>
+            <td>${dataHoraAtendimentoLead(lead)}</td>
+            <td>
+                <button
+                class="whatsapp-button"
+                onclick="abrirWhatsAppLead(${lead.id})">
+                    Confirmar WhatsApp
+                </button>
+            </td>
+        </tr>
+    `)
+    ])
+    .map((linhas)=>linhas.join(""))
+    .join("");
+
+}
+
+function renderizarRemarketing(leads){
+
+    const lista =
+    document.getElementById("listaRemarketing");
+
+    if(!lista){
+        return;
+    }
+
+    const naoVai =
+    leads.filter(leadNaoVai);
+
+    const confirmados =
+    leads.filter(leadConfirmouPresenca);
+
+    const pendentes =
+    leads.filter((lead)=>!normalizarPresenca(lead.confirmou_presenca));
+
+    document
+    .getElementById("remarketingNaoVai")
+    .innerText = naoVai.length;
+
+    document
+    .getElementById("remarketingConfirmados")
+    .innerText = confirmados.length;
+
+    document
+    .getElementById("remarketingPendentes")
+    .innerText = pendentes.length;
+
+    if(naoVai.length == 0){
+
+        lista.innerHTML =
+        `<tr><td colspan="7" class="empty-state">Nenhum lead marcado como Nao vai.</td></tr>`;
+        return;
+
+    }
+
+    const grupos =
+    agruparLeadsPorConsultor(naoVai);
+
+    lista.innerHTML =
+    grupos
+    .map((grupo)=>[
+        linhaGrupoConsultor(grupo, 7),
+        ...grupo.leads.map((lead)=>`
+        <tr data-search="${textoBuscaLead(lead)}">
+            <td>${escaparHtml(lead.nome)}</td>
+            <td>${escaparHtml(lead.telefone)}</td>
+            <td>${escaparHtml(lead.origem || "-")}</td>
+            <td>${dataHoraAtendimentoLead(lead)}</td>
+            <td>${badgePresenca(lead.confirmou_presenca)}</td>
+            <td class="lead-details">${campoLead(observacaoAtendimentoLead(lead) || lead.observacoes_importantes)}</td>
+            <td>
+                <div class="action-buttons">
+                    <button
+                    class="whatsapp-button"
+                    onclick="abrirWhatsAppRemarketingLead(${lead.id})">
+                        Chamar WhatsApp
+                    </button>
+
+                    ${botoesConfirmacaoPresenca(lead)}
+                </div>
+            </td>
+        </tr>
+    `)
+    ])
+    .map((linhas)=>linhas.join(""))
+    .join("");
+
+}
+
+function preencherConfiguracoes(){
+
+    const nome =
+    document.getElementById("configNome");
+
+    if(nome){
+        nome.value = usuarioLogado.nome || "";
+    }
+
+    atualizarPreviaFoto();
+
+}
+
+function atualizarPreviaFoto(){
+
+    const preview =
+    document.getElementById("configFotoPreview");
+
+    const avatar =
+    document.getElementById("avatarConsultor");
+
+    const conteudo =
+    fotoPerfilSelecionada
+    ? `<img src="${fotoPerfilSelecionada}" alt="Foto do usuário">`
+    : iniciaisUsuario(usuarioLogado.nome);
+
+    if(preview){
+        preview.innerHTML = conteudo;
+    }
+
+    if(avatar){
+        avatar.innerHTML = conteudo;
+    }
+
+}
+
+function carregarFotoPerfil(){
+
+    const input =
+    document.getElementById("configFoto");
+
+    const arquivo =
+    input.files[0];
+
+    if(!arquivo){
+        return;
+    }
+
+    const leitor =
+    new FileReader();
+
+    leitor.onload = ()=>{
+
+        const imagem =
+        new Image();
+
+        imagem.onload = ()=>{
+
+            const tamanho =
+            Math.min(
+                imagem.width,
+                imagem.height
+            );
+
+            const origemX =
+            (imagem.width - tamanho) / 2;
+
+            const origemY =
+            (imagem.height - tamanho) / 2;
+
+            const canvas =
+            document.createElement("canvas");
+
+            canvas.width = 320;
+            canvas.height = 320;
+
+            const contexto =
+            canvas.getContext("2d");
+
+            contexto.drawImage(
+                imagem,
+                origemX,
+                origemY,
+                tamanho,
+                tamanho,
+                0,
+                0,
+                320,
+                320
+            );
+
+            fotoPerfilSelecionada =
+            canvas.toDataURL("image/jpeg", .85);
+
+            atualizarPreviaFoto();
+
+        };
+
+        imagem.src =
+        leitor.result;
+
+    };
+
+    leitor.readAsDataURL(arquivo);
+
+}
+
+async function salvarPerfilUsuario(){
+
+    const nome =
+    document.getElementById("configNome").value.trim();
+
+    const senha =
+    document.getElementById("configSenha").value.trim();
+
+    if(!nome){
+
+        mostrarMensagem(
+            "Informe o nome do usuário.",
+            "Atenção"
+        );
+        return;
+
+    }
+
+    const response =
+    await fetch(
+        "/usuario/" + usuarioLogado.id,
+        {
+            method:"PUT",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                nome,
+                senha,
+                foto_perfil:fotoPerfilSelecionada
+            })
+        }
+    );
+
+    const resultado =
+    await response.json();
+
+    if(!resultado.success){
+
+        mostrarMensagem(
+            "Não foi possível salvar o perfil.",
+            "Atenção"
+        );
+        return;
+
+    }
+
+    localStorage.setItem(
+        "usuario",
+        JSON.stringify(resultado.usuario)
+    );
+
+    usuarioLogado.nome =
+    resultado.usuario.nome;
+
+    usuarioLogado.senha =
+    resultado.usuario.senha;
+
+    usuarioLogado.foto_perfil =
+    resultado.usuario.foto_perfil;
+
+    fotoPerfilSelecionada =
+    resultado.usuario.foto_perfil || "";
+
+    document
+    .getElementById("nomeConsultor")
+    .innerText = usuarioLogado.nome;
+
+    document
+    .getElementById("configSenha")
+    .value = "";
+
+    atualizarPreviaFoto();
+
+    mostrarMensagem("Perfil atualizado com sucesso.");
+
+}
+
+
+
+async function salvarLead(){
+
+    const nome =
+    document.getElementById("nome").value;
+
+    const local =
+    document.getElementById("local").value;
+
+    const telefone =
+    document.getElementById("telefone").value;
+
+    const profissao =
+    document.getElementById("profissao").value;
+    
+    const origem =
+    document.getElementById("origem").value;
+
+    const status_cliente =
+    document.getElementById("statusCliente").value;
+
+    const interesse_imovel =
+    document.getElementById("interesseImovel").value;
+
+    const possui_fgts =
+    document.getElementById("possuiFgts").value;
+
+    const score_aproximado =
+    document.getElementById("valorEntrada").value;
+
+    const valor_entrada =
+    moedaParaNumero(score_aproximado);
+
+    const valor_parcela =
+    moedaParaNumero(
+        document.getElementById("valorParcela").value
+    );
+
+    const confirmou_presenca =
+    normalizarPresenca(document.getElementById("confirmouPresenca").value);
+
+    const ultimo_contato =
+    document.getElementById("ultimoContato").value;
+
+    const data_visita =
+    document.getElementById("dataVisita").value;
+
+    const horario_atendimento =
+    document.getElementById("horarioAtendimento").value;
+
+    const observacoes_importantes =
+    document.getElementById("observacoesImportantes").value;
+    
+    const consultor_id =
+usuarioLogado.id;
+
+
+
+    if(
+        !nome ||
+        !local ||
+        !telefone
+    ){
+
+        mostrarMensagem(
+            "Preencha todos os campos.",
+            "Atenção"
+        );
+
+        return;
+
+    }
+
+
+
+    const response =
+    await fetch("/lead",{
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+
+    nome,
+    local,
+    telefone,
+    origem,
+    status_cliente,
+    interesse_imovel,
+    possui_fgts,
+    score_aproximado,
+    valor_entrada,
+    valor_parcela,
+    profissao,
+    confirmou_presenca,
+    ultimo_contato,
+    data_visita,
+    horario_atendimento,
+    observacoes_importantes,
+
+    consultor:
+    usuarioLogado.nome,
+
+    consultor_id
+
+})
+
+    });
+
+
+
+const resultado =
+await response.text();
+
+
+
+if(resultado == "Lead salvo"){
+
+    await renderizar();
+
+}
+
+
+
+mostrarMensagem(resultado);
+document.getElementById("nome").value = "";
+
+document.getElementById("local").value = "";
+
+document.getElementById("telefone").value = "";
+
+document.getElementById("profissao").value = "";
+
+document.getElementById("possuiFgts").value = "";
+
+document.getElementById("valorEntrada").value = "";
+
+document.getElementById("valorParcela").value = "";
+
+document.getElementById("confirmouPresenca").value = "";
+
+document.getElementById("ultimoContato").value = "";
+
+document.getElementById("dataVisita").value = "";
+
+document.getElementById("horarioAtendimento").value = "";
+
+document.getElementById("observacoesImportantes").value = "";
+
+
+}
+
+
+
+function logout(){
+
+    localStorage.removeItem("usuario");
+
+    window.location.href =
+    "/login";
+
+}
+    renderizar();
+
+async function apagarLead(id){
+
+    const confirmar =
+    confirm(
+        "Deseja apagar esta lead?"
+    );
+
+    if(!confirmar){
+        return;
+    }
+
+    await fetch(
+
+        "/lead/" + id,
+
+        {
+            method:"DELETE"
+        }
+
+    );
+
+    mostrarMensagem("Lead apagada com sucesso.");
+
+    renderizar();
+
+}
+async function renderizar(){
+
+    if(!usuarioLogado || !usuarioLogado.id){
+        return;
+    }
+
+    const urlLeads =
+    usuarioEhAdmin()
+    ? "/leads?consultor_id=all&admin_id=" + encodeURIComponent(usuarioLogado.id)
+    : "/leads?consultor_id=" + encodeURIComponent(usuarioLogado.id);
+
+    const response =
+    await fetch(urlLeads);
+
+    leads =
+    await response.json();
+
+
+
+    let htmlAgendamento = "";
+
+    let htmlAgenda = "";
+
+    let htmlHistorico = "";
+
+
+
+    let abertos = 0;
+
+    let atendidos = 0;
+
+
+
+    const gruposLeads =
+    agruparLeadsPorConsultor(leads);
+
+    gruposLeads.forEach((grupo)=>{
+
+        const leadsAgendaGrupo =
+        grupo
+        .leads
+        .filter((lead)=>lead.data_visita);
+
+        htmlHistorico +=
+        linhaGrupoConsultor(grupo, 7);
+
+        htmlAgendamento +=
+        linhaGrupoConsultor(grupo, 8);
+
+        if(leadsAgendaGrupo.length){
+            htmlAgenda += linhaGrupoConsultor(
+                {
+                    nome:grupo.nome,
+                    leads:leadsAgendaGrupo
+                },
+                7
+            );
+        }
+
+        grupo.leads.forEach((lead)=>{
+
+
+
+        if(lead.status == "Aberto"){
+
+            abertos++;
+
+        }else{
+
+            atendidos++;
+
+        }
+htmlHistorico += `
+
+<tr
+class="client-row"
+data-search="${textoBuscaLead(lead)}"
+onclick="alternarDetalhesCliente(${lead.id})">
+
+    <td>${lead.nome}</td>
+
+    <td>${lead.telefone}</td>
+
+    <td>${lead.origem || "-"}</td>
+
+    <td>
+        <span class="status
+        ${lead.status=="Aberto"
+        ? "aberto"
+        : "atendido"}">${lead.status}</span>
+    </td>
+
+    <td class="lead-details">
+        <strong>Status cliente:</strong> ${campoLead(lead.status_cliente)}<br>
+        <strong>Imóvel:</strong> ${campoLead(lead.interesse_imovel)}
+    </td>
+
+    <td class="lead-details">
+        ${campoLead(lead.observacoes_importantes)}
+    </td>
+
+    <td>
+
+        <div class="action-buttons">
+            <button
+            class="primary"
+            onclick="event.stopPropagation(); abrirEditorCliente(${lead.id})">
+                Editar
+            </button>
+
+            <button
+            class="whatsapp-button"
+            onclick="event.stopPropagation(); abrirWhatsAppLead(${lead.id})">
+                Confirmar WhatsApp
+            </button>
+
+            ${botoesConfirmacaoPresenca(lead)}
+
+            <button
+            class="danger"
+            onclick="event.stopPropagation(); apagarLead(${lead.id})">
+                Excluir
+            </button>
+        </div>
+
+    </td>
+
+</tr>
+
+<tr
+id="detalhes-${lead.id}"
+class="client-detail-row"
+data-search="${textoBuscaLead(lead)}">
+    <td colspan="7">
+        <div class="client-detail-panel">
+            <div class="detail-item">
+                <strong>Nome</strong>
+                ${campoLead(lead.nome)}
+            </div>
+            <div class="detail-item">
+                <strong>Consultor</strong>
+                ${campoLead(lead.consultor)}
+            </div>
+            <div class="detail-item">
+                <strong>Telefone</strong>
+                ${campoLead(lead.telefone)}
+            </div>
+            <div class="detail-item">
+                <strong>Indicação</strong>
+                ${campoLead(lead.origem)}
+            </div>
+            <div class="detail-item">
+                <strong>Região desejada</strong>
+                ${campoLead(lead.local_desejado)}
+            </div>
+            <div class="detail-item">
+                <strong>Status cliente</strong>
+                ${campoLead(lead.status_cliente)}
+            </div>
+            <div class="detail-item">
+                <strong>Interesse do imóvel</strong>
+                ${campoLead(lead.interesse_imovel)}
+            </div>
+            <div class="detail-item">
+                <strong>Profissão</strong>
+                ${campoLead(lead.profissao)}
+            </div>
+            <div class="detail-item">
+                <strong>Entrada</strong>
+                ${campoLead(lead.possui_fgts)}
+            </div>
+            <div class="detail-item">
+                <strong>Valor da entrada</strong>
+                ${formatarDinheiro(lead.valor_entrada || moedaParaNumero(lead.score_aproximado))}
+            </div>
+            <div class="detail-item">
+                <strong>Valor da parcela</strong>
+                ${formatarDinheiro(lead.valor_parcela)}
+            </div>
+            <div class="detail-item">
+                <strong>Atendimento</strong>
+                <span class="status ${lead.status=="Aberto" ? "aberto" : "atendido"}">${lead.status}</span>
+            </div>
+            <div class="detail-item">
+                <strong>Presença</strong>
+                ${badgePresenca(lead.confirmou_presenca)}
+            </div>
+            <div class="detail-item">
+                <strong>Data da visita</strong>
+                ${dataHoraAtendimentoLead(lead)}
+            </div>
+            <div class="detail-item">
+                <strong>Último contato</strong>
+                ${dataLead(lead.ultimo_contato)}
+            </div>
+            <div class="detail-item">
+                <strong>Observações importantes</strong>
+                ${campoLead(lead.observacoes_importantes)}
+            </div>
+            <div class="detail-item">
+                <strong>Observação do atendimento</strong>
+                ${campoLead(observacaoAtendimentoLead(lead))}
+            </div>
+            <div class="detail-actions">
+                <button
+                class="primary"
+                onclick="abrirEditorCliente(${lead.id})">
+                    Editar cliente
+                </button>
+
+                <button
+                class="whatsapp-button"
+                onclick="abrirWhatsAppLead(${lead.id})">
+                    Confirmar WhatsApp
+                </button>
+
+                ${botoesConfirmacaoPresenca(lead)}
+            </div>
+        </div>
+    </td>
+</tr>
+
+`;
+
+htmlAgendamento += `
+
+<tr data-search="${textoBuscaLead(lead)}">
+
+    <td>${lead.nome}</td>
+    <td>${campoLead(lead.status_cliente)}</td>
+    <td>${lead.origem || "-"}</td>
+    <td>
+
+        <select
+        id="status-${lead.id}">
+
+            <option
+            value="Aberto"
+            ${lead.status=="Aberto"
+            ? "selected"
+            : ""}>
+
+            Aberto
+
+            </option>
+
+            <option
+            value="Atendido"
+            ${lead.status=="Atendido"
+            ? "selected"
+            : ""}>
+
+            Atendido
+
+            </option>
+
+        </select>
+
+    </td>
+
+    <td>${badgePresenca(lead.confirmou_presenca)}</td>
+
+    <td>
+
+        <input
+
+        id="obs-${lead.id}"
+
+        value="${lead.observacao || ""}"
+
+        placeholder="Observação">
+
+    </td>
+
+    <td>${dataHoraAtendimentoLead(lead)}</td>
+
+    <td>
+
+        <div class="action-buttons">
+            <button
+            class="primary"
+            onclick="salvarAgendamento(${lead.id})">
+                Salvar
+            </button>
+
+            <button
+            class="whatsapp-button"
+            onclick="abrirWhatsAppLead(${lead.id})">
+                Confirmar WhatsApp
+            </button>
+
+            ${botoesConfirmacaoPresenca(lead)}
+        </div>
+
+    </td>
+
+</tr>
+
+`;
+
+if(lead.data_visita){
+
+htmlAgenda += `
+
+<tr data-search="${textoBuscaLead(lead)}">
+    <td>${dataHoraAtendimentoLead(lead)}</td>
+    <td>${lead.nome}</td>
+    <td>${lead.telefone}</td>
+    <td>${lead.origem || "-"}</td>
+    <td>
+        <span class="status
+        ${lead.status=="Aberto"
+        ? "aberto"
+        : "atendido"}">${lead.status}</span>
+    </td>
+    <td>${badgePresenca(lead.confirmou_presenca)}</td>
+    <td>
+        <div class="lead-details">
+            ${campoLead(observacaoAtendimentoLead(lead))}
+        </div>
+        <button
+        class="whatsapp-button"
+        onclick="abrirWhatsAppLead(${lead.id})">
+            Confirmar WhatsApp
+        </button>
+        <div class="action-buttons">
+            ${botoesConfirmacaoPresenca(lead)}
+        </div>
+    </td>
+</tr>
+
+`;
+
+}
+    });
+
+    });
+
+
+
+
+
+    document
+    .getElementById("listaAgendamento")
+    .innerHTML = htmlAgendamento;
+
+    document
+    .getElementById("listaAgenda")
+    .innerHTML =
+    htmlAgenda ||
+    `<tr><td colspan="7" class="empty-state">Nenhuma visita agendada.</td></tr>`;
+
+    document
+    .getElementById("totalAgenda")
+    .innerText =
+    `${leads.filter((lead)=>lead.data_visita).length} agendadas`;
+
+
+
+    document
+    .getElementById("listaHistorico")
+    .innerHTML = htmlHistorico;
+
+    filtrarTabela(
+        "pesquisaAgendamento",
+        "listaAgendamento"
+    );
+
+    filtrarTabela(
+        "pesquisaAgenda",
+        "listaAgenda"
+    );
+
+    filtrarTabela(
+        "pesquisaRemarketing",
+        "listaRemarketing"
+    );
+
+    filtrarTabela(
+        "pesquisaHistorico",
+        "listaHistorico"
+    );
+
+
+
+
+    document
+    .getElementById("totalLeads")
+    .innerText = leads.length;
+
+
+
+    document
+    .getElementById("totalAbertos")
+    .innerText = abertos;
+
+
+
+    document
+    .getElementById("totalAtendidos")
+    .innerText = atendidos;
+
+    renderizarGraficoSemanal(leads);
+    renderizarResumoHome(leads, abertos, atendidos);
+    renderizarAtividadesRecentes(leads);
+    renderizarRelatorio(leads, abertos, atendidos);
+    renderizarRemarketing(leads);
+
+}
+
+
+
+renderizar();
+
+</script>
+
+</body>
+
+</html>
