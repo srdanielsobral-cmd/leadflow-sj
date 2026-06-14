@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login LeadFlow</title>
+<script>
+if(location.protocol === "file:"){
+    window.location.href = "http://localhost:3000/login";
+}
+</script>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial;
+    background:#eef8f7;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:24px;
+    color:#0f172a;
+}
+
+.login-page{
+    width:min(980px, 100%);
+    min-height:560px;
+    background:white;
+    border-radius:18px;
+    box-shadow:0 24px 60px rgba(15,23,42,.18);
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    overflow:hidden;
+}
+
+.login-brand{
+    background:linear-gradient(160deg, #073763 0%, #0a5f9e 52%, #2daa36 100%);
+    color:white;
+    padding:48px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.brand-kicker{
+    color:#c8f7d1;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:18px;
+}
+
+.login-brand h1{
+    font-size:42px;
+    line-height:48px;
+    margin:0;
+}
+
+.login-logo{
+    display:grid;
+    justify-items:start;
+    gap:14px;
+    margin:0 0 26px;
+}
+
+.login-logo img{
+    display:block;
+    width:min(190px, 100%);
+    height:auto;
+    border-radius:0;
+    background:transparent;
+    filter:drop-shadow(0 18px 28px rgba(0,0,0,.24));
+}
+
+.login-logo strong{
+    color:white;
+    font-size:34px;
+    line-height:38px;
+}
+
+.login-logo small{
+    display:block;
+    color:#d9ffe2;
+    font-size:15px;
+    line-height:20px;
+    font-weight:normal;
+    margin-top:4px;
+}
+
+.login-brand p{
+    color:#cbd5e1;
+    font-size:15px;
+    line-height:24px;
+    max-width:390px;
+}
+
+.verse{
+    border-top:1px solid #334155;
+    padding-top:22px;
+}
+
+.verse b{
+    color:white;
+    display:block;
+    margin-top:14px;
+}
+
+.login-panel{
+    padding:48px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.login-box{
+    width:100%;
+    max-width:360px;
+    margin:0 auto;
+}
+
+.login-box h2{
+    font-size:30px;
+    margin:0 0 8px;
+}
+
+.login-box h3{
+    color:#64748b;
+    font-size:16px;
+    font-weight:normal;
+    margin:0 0 28px;
+}
+
+.form-group{
+    margin-bottom:16px;
+}
+
+.form-group label{
+    color:#334155;
+    display:block;
+    font-size:14px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    font-size:15px;
+    outline:none;
+}
+
+input:focus{
+    border-color:#0a70b7;
+    box-shadow:0 0 0 3px rgba(45,170,54,.16);
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    background:linear-gradient(135deg, #0a70b7, #2daa36);
+    color:white;
+    margin-top:8px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:bold;
+}
+
+button:hover{
+    filter:brightness(.94);
+}
+
+.login-error{
+    display:none;
+    background:#fee2e2;
+    color:#991b1b;
+    border:1px solid #fecaca;
+    border-radius:8px;
+    padding:12px;
+    font-size:14px;
+    margin-bottom:16px;
+}
+
+.login-error.active{
+    display:block;
+}
+
+@media (max-width:800px){
+    .login-page{
+        grid-template-columns:1fr;
+        min-height:auto;
+    }
+
+    .login-brand{
+        padding:32px;
+        gap:40px;
+    }
+
+    .login-brand h1{
+        font-size:34px;
+        line-height:40px;
+    }
+
+    .login-panel{
+        padding:32px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-page">
+
+    <div class="login-brand">
+        <div>
+            <div class="login-logo">
+                <img src="/leadflow-mark.png" alt="LeadFlow">
+                <strong>LeadFlow</strong>
+            </div>
+            <p>Organize leads, agendamentos e atendimentos em um painel simples para acompanhar sua rotina comercial.</p>
+        </div>
+
+        <div class="verse">
+            <p>
+                "Faze-me ouvir da tua benignidade pela manhã,
+                pois em ti confio; faze-me conhecer o caminho
+                por que devo andar, porque a ti levanto a minha alma."
+                <b>Salmos 143:8</b>
+            </p>
+        </div>
+    </div>
+
+    <div class="login-panel">
+
+        <div class="login-box">
+            <h2>Bem-vindo</h2>
+            <h3 id="saudacao"></h3>
+
+            <div
+            class="login-error"
+            id="erroLogin">
+                Nao foi possivel liberar o acesso agora.
+            </div>
+
+            <div class="form-group">
+                <label for="usuario">Usuario</label>
+                <input
+                type="text"
+                id="usuario"
+                placeholder="Opcional">
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <input
+                type="password"
+                id="senha"
+                placeholder="Opcional">
+            </div>
+
+            <button onclick="login()">
+                Acessar LeadFlow
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+const hora = new Date().getHours();
+let saudacao = "";
+
+if(hora >= 6 && hora < 12){
+    saudacao = "Bom dia";
+}else if(hora >= 12 && hora < 18){
+    saudacao = "Boa tarde";
+}else{
+    saudacao = "Boa noite";
+}
+
+document
+.getElementById("saudacao")
+.innerText = saudacao;
+
+async function login(){
+    const usuario =
+    document.getElementById("usuario").value.trim();
+
+    const senha =
+    document.getElementById("senha").value.trim();
+
+    document
+    .getElementById("erroLogin")
+    .classList
+    .remove("active");
+
+    let resultado = { success:false };
+
+    try{
+        const response =
+        await fetch("/login",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                usuario,
+                senha
+            })
+        });
+
+        resultado =
+        await response.json();
+    }catch(err){
+        resultado = { success:false };
+    }
+
+    if(resultado.success){
+        localStorage.setItem(
+            "usuario",
+            JSON.stringify(resultado.usuario)
+        );
+
+        window.location.href =
+        "/sistema";
+    }else{
+        document
+        .getElementById("erroLogin")
+        .classList
+        .add("active");
+    }
+}
+</script>
+
+</body>
+</html>
